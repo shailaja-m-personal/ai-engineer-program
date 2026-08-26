@@ -3,6 +3,8 @@
 #tuples are recognized by () and lists are recognized by []
 a=(1,2,3,4,5)
 print(a)
+b=("Joe", "Jessy")
+print(b)
 
 #list
 al = [100,200]
