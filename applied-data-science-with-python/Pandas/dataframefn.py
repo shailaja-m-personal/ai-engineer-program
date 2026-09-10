@@ -186,12 +186,48 @@ grouped = df.groupby(['gender','time'])
 # print(pd.DataFrame(df.groupby(['day','time'])['gender'].value_counts()))
 # print(pd.DataFrame(df.groupby(['day','time'])['gender'].count())) #count returns total row count for each group
 
-print(df.pivot_table(index = 'time', columns = 'day', values = 'total_bill', aggfunc = 'sum'))
+# print(df.pivot_table(index = 'time', columns = 'day', values = 'total_bill', aggfunc = 'sum'))
 
-print(df.groupby(['time', 'day']).agg({'total_bill' :'sum'}))
+# print(df.groupby(['time', 'day']).agg({'total_bill' :'sum'}))
 
-print(df.groupby(['gender', 'day', 'smoker'])[['total_bill', 'tip']].mean())
+# print(df.groupby(['gender', 'day', 'smoker'])[['total_bill', 'tip']].mean())
 
-print(df.pivot_table(index = ['gender', 'day'], columns = 'smoker', values = ['total_bill', 'tip'], aggfunc = 'mean'))
+# print(df.pivot_table(index = ['gender', 'day'], columns = 'smoker', values = ['total_bill', 'tip'], aggfunc = 'mean'))
 
-print(df.pivot_table(index = ['gender'], columns = ['smoker', 'day'], values = ['total_bill', 'tip'], aggfunc = 'mean'))    
+# print(df.pivot_table(index = ['gender'], columns = ['smoker', 'day'], values = ['total_bill', 'tip'], aggfunc = 'mean'))    
+
+#apply function
+# def change_name(x):
+#         if x == 'Sun':
+#                 return 'Sunday'
+#         if x == 'Mon':
+#                 return 'Monday'
+#         if x == 'Tue':
+#                 return 'Tuesday'
+#         if x == 'Fri':
+#                 return 'Friday'
+#         if x == 'Sat':
+#                 return 'Saturday'
+#         else:
+#                 return x
+
+# df['day'] = df['day'].apply(change_name)
+# print(df.head(10))
+
+def analyze_total_bill(x):
+        if 0 >= x <= 10:
+                return 'Low'
+        elif 10 < x <= 25:
+                return 'Medium'
+        else:
+                return 'High'
+        
+df['total_bill_analysis'] = df['total_bill'].apply(analyze_total_bill)
+
+def day_type(x):
+        if x == 'Sun' or x == 'Sat':
+                return 'Weekend'
+        else:
+                return 'Weekday'
+df['daytype'] = df['day'].apply(day_type)
+print(df.head(10))
