@@ -214,20 +214,24 @@ grouped = df.groupby(['gender','time'])
 # df['day'] = df['day'].apply(change_name)
 # print(df.head(10))
 
-def analyze_total_bill(x):
-        if 0 >= x <= 10:
-                return 'Low'
-        elif 10 < x <= 25:
-                return 'Medium'
-        else:
-                return 'High'
+# def analyze_total_bill(x):
+#         if 0 >= x <= 10:
+#                 return 'Low'
+#         elif 10 < x <= 25:
+#                 return 'Medium'
+#         else:
+#                 return 'High'
         
-df['total_bill_analysis'] = df['total_bill'].apply(analyze_total_bill)
+# df['total_bill_analysis'] = df['total_bill'].apply(analyze_total_bill)
 
 def day_type(x):
         if x == 'Sun' or x == 'Sat':
                 return 'Weekend'
         else:
                 return 'Weekday'
-df['daytype'] = df['day'].apply(day_type)
+df['day_type'] = df['day'].apply(day_type)
+print(df.groupby(['day_type']).agg({'total_bill' : 'sum'}))
+
+df['_lambda_day'] = df['day'].apply(lambda x: 'Weekend' if x in ['Sun', 'Sat'] else 'Weekday')
 print(df.head(10))
+
