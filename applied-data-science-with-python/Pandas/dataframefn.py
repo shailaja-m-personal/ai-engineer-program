@@ -224,14 +224,30 @@ grouped = df.groupby(['gender','time'])
         
 # df['total_bill_analysis'] = df['total_bill'].apply(analyze_total_bill)
 
-def day_type(x):
-        if x == 'Sun' or x == 'Sat':
-                return 'Weekend'
-        else:
-                return 'Weekday'
-df['day_type'] = df['day'].apply(day_type)
-print(df.groupby(['day_type']).agg({'total_bill' : 'sum'}))
+# def day_type(x):
+#         if x == 'Sun' or x == 'Sat':
+#                 return 'Weekend'
+#         else:
+#                 return 'Weekday'
+# df['day_type'] = df['day'].apply(day_type)
+# print(df.groupby(['day_type']).agg({'total_bill' : 'sum'}))
 
-df['_lambda_day'] = df['day'].apply(lambda x: 'Weekend' if x in ['Sun', 'Sat'] else 'Weekday')
+# df['_lambda_day'] = df['day'].apply(lambda x: 'Weekend' if x in ['Sun', 'Sat'] else 'Weekday')
+# print(df.head(10))
+
+# df['_lambda_bill'] = df['total_bill'].apply(lambda x: 'inexpensive' if x <= 10 else 'moderate' if x <= 25 else 'expensive') 
+
+# df['gender_bool'] = df['gender'].apply(lambda x: 1 if x == 'Female' else 0)
+# print(df.head(10))
+df['combo'] = df['gender'] + '_' + df['smoker']
+# print(df.head(10))
+# #string function
+# print('Female_No'.split('_'))
+
+df['split_gender'] = df['combo'].apply(lambda x: x.split('_')[0])
+df['split_smoker'] = df['combo'].apply(lambda x: x.split('_')[1])
+# print(df.head(10))
+# print(df['combo'].str.split('_').head(2))
+# print(df['combo'].str.split('_', expand=True).head(2))
+df[['split_gender', 'split_smoker']] = df['combo'].str.split('_', expand=True)
 print(df.head(10))
-
