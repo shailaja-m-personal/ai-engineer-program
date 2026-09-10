@@ -178,11 +178,20 @@ grouped = df.groupby(['gender','time'])
 # print(grouped.groups.keys())
 # print(grouped.get_group(('Female', 'Dinner')))
 # print(df.groupby(['gender','time']).mean(numeric_only=True))
-print(df.groupby('gender')['total_bill'].mean())
-print(df.groupby('smoker')['total_bill'].mean())
-print(df.groupby('day')['total_bill'].mean())
-print(df.groupby('time')['total_bill'].mean())
-print(df.groupby('time')['smoker'].value_counts())
-print(pd.DataFrame(df.groupby(['day','time'])['gender'].value_counts()))
-print(pd.DataFrame(df.groupby(['day','time'])['gender'].count())) #count returns total row count for each group
+# print(df.groupby('gender')['total_bill'].mean())
+# print(df.groupby('smoker')['total_bill'].mean())
+# print(df.groupby('day')['total_bill'].mean())
+# print(df.groupby('time')['total_bill'].mean())
+# print(df.groupby('time')['smoker'].value_counts())
+# print(pd.DataFrame(df.groupby(['day','time'])['gender'].value_counts()))
+# print(pd.DataFrame(df.groupby(['day','time'])['gender'].count())) #count returns total row count for each group
 
+print(df.pivot_table(index = 'time', columns = 'day', values = 'total_bill', aggfunc = 'sum'))
+
+print(df.groupby(['time', 'day']).agg({'total_bill' :'sum'}))
+
+print(df.groupby(['gender', 'day', 'smoker'])[['total_bill', 'tip']].mean())
+
+print(df.pivot_table(index = ['gender', 'day'], columns = 'smoker', values = ['total_bill', 'tip'], aggfunc = 'mean'))
+
+print(df.pivot_table(index = ['gender'], columns = ['smoker', 'day'], values = ['total_bill', 'tip'], aggfunc = 'mean'))    
